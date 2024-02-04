@@ -1,23 +1,25 @@
 #the mod name as displayed in-game
-displayName: "Java Mod Template"
+displayName: "Drunkustry"
 
 #the internal name of your mod
-name: "example-java-mod"
+name: "how-is-a-robot-drunk-what"
 
 #your name
-author: "You"
+author: "MEEPofFaith"
 
 #the fully qualified main class of the mod
-main: "example.ExampleJavaMod"
+main: "drunkustry.Drunkustry"
 
 #the mod description as seen in the mod dialog
-description: "A Mindustry Java mod template."
+description: "aaaAAAAaaaaaAAAaaaaAAAAA"
 
 #the mod version
 version: 1.0
 
 #the minimum game build required to run this mod
-minGameVersion: 145
+minGameVersion: 146
 
 #this is a java mod
 java: true
+
+hidden: true
