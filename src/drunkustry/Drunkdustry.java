@@ -3,9 +3,11 @@ package drunkustry;
 import arc.*;
 import arc.util.*;
 import drunkustry.audio.*;
+import drunkustry.graphics.*;
 import mindustry.game.EventType.*;
 import mindustry.mod.*;
 
+import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class Drunkdustry extends Mod{
@@ -19,6 +21,7 @@ public class Drunkdustry extends Mod{
     @Override
     public void init(){
         DrunkSound.init();
+        DrunkColors.init();
     }
 
     private void loadSettings(){
