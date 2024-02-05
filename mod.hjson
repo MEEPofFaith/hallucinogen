@@ -1,5 +1,5 @@
 #the mod name as displayed in-game
-displayName: "Drunkustry"
+displayName: "Drunkdustry"
 
 #the internal name of your mod
 name: "how-is-a-robot-drunk-what"
@@ -8,7 +8,7 @@ name: "how-is-a-robot-drunk-what"
 author: "MEEPofFaith"
 
 #the fully qualified main class of the mod
-main: "drunkustry.Drunkustry"
+main: "drunkustry.Drunkdustry"
 
 #the mod description as seen in the mod dialog
 description: "aaaAAAAaaaaaAAAaaaaAAAAA"
