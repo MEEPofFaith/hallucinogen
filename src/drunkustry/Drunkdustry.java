@@ -21,7 +21,9 @@ public class Drunkdustry extends Mod{
     @Override
     public void init(){
         DrunkSound.init();
+        DrunkShaders.init();
         DrunkColors.init();
+        DrunkWaves.init();
     }
 
     private void loadSettings(){
