@@ -17,7 +17,7 @@ public class DrunkColors{
 
         Events.run(Trigger.drawOver, () -> {
             drunkBuffer.resize(graphics.getWidth(), graphics.getHeight());
-            Draw.draw(Layer.max, () -> {
+            Draw.draw(Layer.endPixeled + 2, () -> {
                 drunkBuffer.begin(Color.clear);
                 Draw.rect();
                 drunkBuffer.end();

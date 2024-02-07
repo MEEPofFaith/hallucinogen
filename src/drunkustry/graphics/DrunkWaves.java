@@ -15,10 +15,10 @@ public class DrunkWaves{
     public static void init(){
         wavesBuffer = new FrameBuffer();
 
-        Events.run(Trigger.draw, () -> wavesBuffer.resize(graphics.getWidth(), graphics.getHeight()));
         Events.run(Trigger.drawOver, () -> {
-            Draw.draw(Layer.min, () -> wavesBuffer.begin(Color.clear));
-            Draw.draw(Layer.max, () -> {
+            wavesBuffer.resize(graphics.getWidth(), graphics.getHeight());
+            Draw.draw(Layer.background - 0.01f, () -> wavesBuffer.begin(Color.clear));
+            Draw.draw(Layer.endPixeled + 4, () -> {
                 wavesBuffer.end();
                 wavesBuffer.blit(DrunkShaders.drunkWaves);
             });

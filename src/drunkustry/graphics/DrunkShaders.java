@@ -14,24 +14,11 @@ import static mindustry.Vars.tree;
 
 public class DrunkShaders{
     public static DrunkShader drunkShader;
-    public static DrunkWaves drunkWaves;
+    public static DrunkShader drunkWaves;
 
     public static void init(){
         drunkShader = new DrunkShader("drunk");
-        drunkWaves = new DrunkWaves();
-    }
-
-    public static class DrunkWaves extends Shader{
-        public DrunkWaves(){
-            super(getShaderFi("screenspace.vert"), getShaderFi("drunkWaves.frag"));
-        }
-
-        @Override
-        public void apply(){
-            setUniformf("u_campos", Core.camera.position.x - Core.camera.width / 2, Core.camera.position.y - Core.camera.height / 2);
-            setUniformf("u_resolution", Core.camera.width, Core.camera.height);
-            setUniformf("u_time", Time.time);
-        }
+        drunkWaves = new DrunkShader("drunkWaves");
     }
 
     /** Copy of {@link SurfaceShader} that's able to get my shader. */
@@ -71,8 +58,6 @@ public class DrunkShaders{
                 }
 
                 noiseTex.bind(1);
-                renderer.effectBuffer.getTexture().bind(0);
-
                 setUniformi("u_noise", 1);
             }
         }
