@@ -1,7 +1,7 @@
 #define HIGHP
 
 #define PI 3.1415926535897932384626433832795
-#define NSCALE 600.0 / 2.0
+#define NSCALE 400.0 / 2.0
 
 uniform sampler2D u_texture;
 uniform sampler2D u_noise;
@@ -24,10 +24,9 @@ void main() {
             texture2D(u_noise, (coords) / NSCALE + vec2(wTime * 1.2) * vec2(-0.5, -0.4)).r
     ) - 1) * 2.0 * 2.0 * PI;
     float oNoise = (texture2D(u_noise, (coords) / NSCALE + vec2(wTime * 1.5) * vec2(-0.8, -0.7)).r +
-        texture2D(u_noise, (coords) / NSCALE + vec2(wTime * 1.1) * vec2(1.3, 0.3)).r - 0.5) * 2.0;
+        texture2D(u_noise, (coords) / NSCALE + vec2(wTime * 1.1) * vec2(1.3, 0.3)).r - 0.5) * 4.0;
 
-    vec2 off = vec2(sin(coords.y / 5.0 + sNoise.x), sin(coords.x / 5.0 + sNoise.y)) / u_resolution * 2.0 * oNoise;
-    c += off;
+    c += vec2(sin(sNoise.x), sin(sNoise.y)) * oNoise / u_resolution * 2.0;
 
     gl_FragColor = texture2D(u_texture, c);
 }
