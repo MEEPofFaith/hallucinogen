@@ -4,6 +4,7 @@ import arc.*;
 import arc.util.*;
 import drunkustry.audio.*;
 import drunkustry.graphics.*;
+import drunkustry.ui.*;
 import mindustry.game.EventType.*;
 import mindustry.mod.*;
 
@@ -11,21 +12,13 @@ import static mindustry.Vars.*;
 
 public class Drunkdustry extends Mod{
 
-    public Drunkdustry(){
-        Events.on(ClientLoadEvent.class, e -> {
-            loadSettings();
-        });
-    }
+    public Drunkdustry(){}
 
     @Override
     public void init(){
+        DrunkSettings.init();
         DrunkSound.init();
         DrunkShaders.init();
         DrunkRendering.init();
-    }
-
-    private void loadSettings(){
-        ui.settings.sound.sliderPref("du-drunk-mag", 10, 1, 20, 1, s -> (s * 10) + "%");
-        ui.settings.sound.sliderPref("du-drunk-scl", 10, 1, 50, 1, s -> Strings.autoFixed(s / 10f, 2) + "x");
     }
 }
