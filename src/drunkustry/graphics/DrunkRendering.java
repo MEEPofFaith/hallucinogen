@@ -19,19 +19,19 @@ public class DrunkRendering{
         aberrationBuffer = new FrameBuffer();
         distortionBuffer = new FrameBuffer();
 
-        Events.run(Trigger.draw, () -> {
+        Events.run(Trigger.drawOver, () -> {
             colorBuffer.resize(graphics.getWidth(), graphics.getHeight());
             aberrationBuffer.resize(graphics.getWidth(), graphics.getHeight());
             distortionBuffer.resize(graphics.getWidth(), graphics.getHeight());
 
-            Draw.draw(Layer.background - 0.02f, () -> {
+            Draw.draw(Layer.min, () -> {
                 distortionBuffer.begin(Color.clear);
             });
-            Draw.draw(Layer.background - 0.01f, () -> {
+            Draw.draw(Layer.min + 0.01f, () -> {
                 aberrationBuffer.begin(Color.clear);
             });
 
-            Draw.draw(Layer.endPixeled + 1, () -> {
+            Draw.draw(Layer.buildBeam + 1.5f, () -> {
                 aberrationBuffer.end();
                 aberrationBuffer.blit(DrunkShaders.chromaticAberration);
 
