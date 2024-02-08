@@ -8,40 +8,29 @@ import mindustry.game.EventType.*;
 import mindustry.graphics.*;
 
 import static arc.Core.*;
+import static drunkustry.graphics.DrunkShaders.*;
 
 public class DrunkRendering{
-    public static FrameBuffer colorBuffer;
-    public static FrameBuffer aberrationBuffer;
-    private static FrameBuffer distortionBuffer;
+    public static final float begin = Layer.min;
+    public static final float end = Layer.max;
 
     public static void init(){
-        colorBuffer = new FrameBuffer();
-        aberrationBuffer = new FrameBuffer();
-        distortionBuffer = new FrameBuffer();
-
         Events.run(Trigger.drawOver, () -> {
-            colorBuffer.resize(graphics.getWidth(), graphics.getHeight());
-            aberrationBuffer.resize(graphics.getWidth(), graphics.getHeight());
-            distortionBuffer.resize(graphics.getWidth(), graphics.getHeight());
-
-            Draw.draw(Layer.min, () -> {
-                distortionBuffer.begin(Color.clear);
+            Draw.draw(begin, () -> {
+                distortion.begin();
             });
-            Draw.draw(Layer.min + 0.01f, () -> {
-                aberrationBuffer.begin(Color.clear);
+            Draw.draw(begin + 0.01f, () -> {
+                chromaticAberration.begin();
             });
 
-            Draw.draw(Layer.buildBeam + 1.5f, () -> {
-                aberrationBuffer.end();
-                aberrationBuffer.blit(DrunkShaders.chromaticAberration);
+            Draw.draw(end, () -> {
+                chromaticAberration.end();
 
-                colorBuffer.begin(Color.clear);
+                colorHallucination.begin();
                 Draw.rect();
-                colorBuffer.end();
-                colorBuffer.blit(DrunkShaders.colorHallucination);
+                colorHallucination.end();
 
-                distortionBuffer.end();
-                distortionBuffer.blit(DrunkShaders.distortion);
+                distortion.end();
             });
         });
     }

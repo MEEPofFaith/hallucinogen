@@ -25,6 +25,7 @@ public class DrunkShaders{
     /** Copy of {@link SurfaceShader} that's able to get my shader. */
     public static class DrunkShader extends Shader{
         Texture noiseTex;
+        FrameBuffer buffer = new FrameBuffer();
 
         public DrunkShader(String frag){
             super(getShaderFi("screenspace.vert"), getShaderFi(frag + ".frag"));
@@ -46,6 +47,16 @@ public class DrunkShaders{
                 t.setWrap(TextureWrap.repeat);
             };
         }
+        
+        public void begin(){
+            buffer.resize(graphics.getWidth(), graphics.getHeight());
+            buffer.begin(Color.clear);
+        }
+        
+        public void end(){
+            buffer.end();
+            buffer.blit(this);
+        }
 
         @Override
         public void apply(){
@@ -59,6 +70,7 @@ public class DrunkShaders{
                 }
 
                 noiseTex.bind(1);
+                buffer.getTexture().bind(0);
                 setUniformi("u_noise", 1);
             }
         }
