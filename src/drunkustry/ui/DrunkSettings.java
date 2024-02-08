@@ -21,8 +21,8 @@ public class DrunkSettings{
         ui.settings.addCategory(bundle.get("setting.drunk-title"), "hallucinogen-settings-icon", t -> {
             t.pref(new Separator("@settings.sound"));
             t.checkPref("du-pitch", true);
-            t.pref(new FloatSliderSetting("du-drunk-mag", 1f, 0.1f, 2f, 0.01f, percent));
             t.pref(new FloatSliderSetting("du-drunk-scl", 1f, 0.1f, 5f, 0.01f, mult));
+            t.pref(new FloatSliderSetting("du-drunk-mag", 1f, 0.1f, 2f, 0.01f, percent));
             t.checkPref("du-flanger", true);
             t.pref(new Separator("@settings.graphics"));
             t.checkPref("du-aberration", true);
