@@ -1,7 +1,12 @@
 package drunkustry.ui;
 
+import arc.*;
+import arc.scene.event.*;
+import arc.scene.ui.*;
+import arc.scene.ui.layout.*;
 import arc.util.*;
 import mindustry.gen.*;
+import mindustry.ui.*;
 import mindustry.ui.dialogs.SettingsMenuDialog.*;
 import mindustry.ui.dialogs.SettingsMenuDialog.SettingsTable.*;
 
@@ -11,19 +16,19 @@ import static mindustry.Vars.*;
 public class DrunkSettings{
     public static void init(){
         ui.settings.addCategory(bundle.get("setting.drunk-title"), "hallucinogen-settings-icon", t -> {
-            t.pref(new Separator("du-sounds"));
+            t.pref(new Separator("settings.sounds"));
             t.checkPref("du-pitch", true);
-            t.sliderPref("du-drunk-mag", 10, 1, 20, 1, s -> (s * 10) + "%");
-            t.sliderPref("du-drunk-scl", 10, 1, 50, 1, s -> Strings.autoFixed(s / 10f, 2) + "x");
+            t.pref(new FloatSliderSetting("du-drunk-mag", 1f, 0.1f, 2f, 0.1f, s -> Strings.autoFixed(s * 100, 2) + "%"));
+            t.pref(new FloatSliderSetting("du-drunk-scl", 1f, 0.1f, 5f, 0.1f, s -> Strings.autoFixed(s, 2) + "x"));
             t.checkPref("du-flanger", true);
-            t.pref(new Separator("du-graphics"));
+            t.pref(new Separator("settings.graphics"));
             t.checkPref("du-aberration", true);
             t.checkPref("du-color", true);
             t.checkPref("du-distortion", true);
         });
     }
 
-    public static class Separator extends Setting{
+    private static class Separator extends Setting{
         float height;
 
         public Separator(String name){
@@ -46,5 +51,49 @@ public class DrunkSettings{
             }
             table.row();
         }
+    }
+
+    private static class FloatSliderSetting extends Setting{
+        float def, min, max, step;
+        FloatStringProc sp;
+
+        public FloatSliderSetting(String name, float def, float min, float max, float step, FloatStringProc s){
+            super(name);
+            this.def = def;
+            this.min = min;
+            this.max = max;
+            this.step = step;
+            this.sp = s;
+
+            settings.defaults(name, def);
+        }
+
+        @Override
+        public void add(SettingsTable table){
+            Slider slider = new Slider(min, max, step, false);
+
+            slider.setValue(settings.getFloat(name));
+
+            Label value = new Label("", Styles.outlineLabel);
+            Table content = new Table();
+            content.add(title, Styles.outlineLabel).left().growX().wrap();
+            content.add(value).padLeft(10f).right();
+            content.margin(3f, 33f, 3f, 33f);
+            content.touchable = Touchable.disabled;
+
+            slider.changed(() -> {
+                settings.put(name, slider.getValue());
+                value.setText(sp.get(slider.getValue()));
+            });
+
+            slider.change();
+
+            addDesc(table.stack(slider, content).width(Math.min(Core.graphics.getWidth() / 1.2f, 460f)).left().padTop(4f).get());
+            table.row();
+        }
+    }
+
+    public interface FloatStringProc{
+        String get(float f);
     }
 }

@@ -20,7 +20,10 @@ public class DrunkSound{
         if(!settings.getBool("du-pitch", true)) return;
 
         Events.run(Trigger.update, () -> {
-            Core.audio.globalPitch = 1.001f + Mathf.sin(150 * drunkScl() / Mathf.PI2, 0.5f * drunkMag());
+            Core.audio.globalPitch = 1.001f + Mathf.sin(
+                150 * settings.getFloat("du-drunk-scl", 1f) / Mathf.PI2,
+                0.5f * settings.getFloat("du-drunk-mag", 1f)
+            );
         });
     }
 
@@ -32,12 +35,5 @@ public class DrunkSound{
         }};
         Core.audio.setFilter(0, filter);
         Core.audio.setFilterParam(0, 0, Filters.paramWet, 1f);
-    }
-
-    public static float drunkMag(){
-        return settings.getInt("du-drunk-mag") / 10f;
-    }
-    public static float drunkScl(){
-        return settings.getInt("du-drunk-scl") / 10f;
     }
 }
