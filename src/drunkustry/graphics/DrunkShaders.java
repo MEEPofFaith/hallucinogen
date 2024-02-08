@@ -8,17 +8,16 @@ import arc.graphics.gl.*;
 import arc.util.*;
 import mindustry.graphics.Shaders.*;
 
-import static arc.Core.files;
-import static mindustry.Vars.renderer;
-import static mindustry.Vars.tree;
+import static arc.Core.*;
+import static mindustry.Vars.*;
 
 public class DrunkShaders{
-    public static DrunkShader drunkShader;
-    public static DrunkShader drunkWaves;
+    public static DrunkShader colorHallucination;
+    public static DrunkShader distortion;
 
     public static void init(){
-        drunkShader = new DrunkShader("drunk");
-        drunkWaves = new DrunkShader("drunkWaves");
+        colorHallucination = new DrunkShader("colorHallucination");
+        distortion = new DrunkShader("distortion");
     }
 
     /** Copy of {@link SurfaceShader} that's able to get my shader. */

@@ -8,7 +8,7 @@ import mindustry.game.EventType.*;
 
 public class DrunkSound{
     public static final FlangerFilter filter = new FlangerFilter(){{
-        set(0.2f, 0.4f);
+        set(0.1f, 0.3f);
     }};
 
     public static void init(){

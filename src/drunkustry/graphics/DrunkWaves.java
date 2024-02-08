@@ -15,12 +15,12 @@ public class DrunkWaves{
     public static void init(){
         wavesBuffer = new FrameBuffer();
 
-        Events.run(Trigger.drawOver, () -> {
+        Events.run(Trigger.draw, () -> {
             wavesBuffer.resize(graphics.getWidth(), graphics.getHeight());
             Draw.draw(Layer.background - 0.01f, () -> wavesBuffer.begin(Color.clear));
-            Draw.draw(Layer.endPixeled + 4, () -> {
+            Draw.draw(Layer.endPixeled + 2, () -> {
                 wavesBuffer.end();
-                wavesBuffer.blit(DrunkShaders.drunkWaves);
+                wavesBuffer.blit(DrunkShaders.distortion);
             });
         });
     }

@@ -15,13 +15,13 @@ public class DrunkColors{
     public static void init(){
         drunkBuffer = new FrameBuffer();
 
-        Events.run(Trigger.drawOver, () -> {
+        Events.run(Trigger.draw, () -> {
             drunkBuffer.resize(graphics.getWidth(), graphics.getHeight());
-            Draw.draw(Layer.endPixeled + 2, () -> {
+            Draw.draw(Layer.endPixeled + 1, () -> {
                 drunkBuffer.begin(Color.clear);
                 Draw.rect();
                 drunkBuffer.end();
-                drunkBuffer.blit(DrunkShaders.drunkShader);
+                drunkBuffer.blit(DrunkShaders.colorHallucination);
             });
         });
     }
