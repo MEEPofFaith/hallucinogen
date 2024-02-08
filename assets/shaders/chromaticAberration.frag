@@ -5,6 +5,7 @@ uniform sampler2D u_texture;
 uniform vec2 u_campos;
 uniform vec2 u_resolution;
 uniform float u_time;
+uniform float u_scl;
 
 varying vec2 v_texCoords;
 
@@ -16,7 +17,7 @@ void main() {
     amount += sin(sTime * 3.5);
     amount += cos(sTime * 4.67);
     amount += sin(sTime * 1.2);
-    amount *= 2.0;
+    amount *= 2.0 * u_scl;
     amount /= u_resolution.x;
 
     vec3 col = vec3(

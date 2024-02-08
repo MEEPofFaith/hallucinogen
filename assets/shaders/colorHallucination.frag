@@ -8,6 +8,7 @@ uniform sampler2D u_noise;
 uniform vec2 u_campos;
 uniform vec2 u_resolution;
 uniform float u_time;
+uniform float u_alpha;
 
 varying vec2 v_texCoords;
 
@@ -29,5 +30,5 @@ void main(){
                     texture2D(u_noise, (coords) / NSCALE + vec2(btime * 1.2) * vec2(0.3, -1.0)).r);
     vec3 hue = hsv2rgb(vec3(noise, 1.0, 1.0));
 
-    gl_FragColor = vec4(hue, 0.25);
+    gl_FragColor = vec4(hue, u_alpha);
 }

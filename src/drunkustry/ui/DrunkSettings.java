@@ -14,17 +14,26 @@ import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class DrunkSettings{
+    private static final FloatStringProc percent = s -> Strings.autoFixed(s * 100, 2) + "%";
+    private static final FloatStringProc mult = s -> Strings.autoFixed(s, 2) + "x";
+
     public static void init(){
         ui.settings.addCategory(bundle.get("setting.drunk-title"), "hallucinogen-settings-icon", t -> {
-            t.pref(new Separator("settings.sounds"));
+            t.pref(new Separator("@settings.sound"));
             t.checkPref("du-pitch", true);
-            t.pref(new FloatSliderSetting("du-drunk-mag", 1f, 0.1f, 2f, 0.1f, s -> Strings.autoFixed(s * 100, 2) + "%"));
-            t.pref(new FloatSliderSetting("du-drunk-scl", 1f, 0.1f, 5f, 0.1f, s -> Strings.autoFixed(s, 2) + "x"));
+            t.pref(new FloatSliderSetting("du-drunk-mag", 1f, 0.1f, 2f, 0.01f, percent));
+            t.pref(new FloatSliderSetting("du-drunk-scl", 1f, 0.1f, 5f, 0.01f, mult));
             t.checkPref("du-flanger", true);
-            t.pref(new Separator("settings.graphics"));
+            t.pref(new Separator("@settings.graphics"));
             t.checkPref("du-aberration", true);
+            t.pref(new FloatSliderSetting("du-aberration-speed", 1f, 0f, 5f, 0.01f, mult));
+            t.pref(new FloatSliderSetting("du-aberration-amount", 1f, 0f, 5f, 0.01f, percent));
             t.checkPref("du-color", true);
+            t.pref(new FloatSliderSetting("du-color-speed", 1f, 0f, 5f, 0.01f, mult));
+            t.pref(new FloatSliderSetting("du-color-alpha", 0.25f, 0f, 1f, 0.01f, percent));
             t.checkPref("du-distortion", true);
+            t.pref(new FloatSliderSetting("du-distortion-speed", 1f, 0f, 5f, 0.01f, mult));
+            t.pref(new FloatSliderSetting("du-distortion-amount", 1f, 0f, 5f, 0.01f, percent));
         });
     }
 

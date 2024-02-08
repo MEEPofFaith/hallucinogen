@@ -12,14 +12,62 @@ import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class DrunkShaders{
-    public static DrunkShader colorHallucination;
-    public static DrunkShader chromaticAberration;
-    public static DrunkShader distortion;
+    public static HallucinationShader colorHallucination;
+    public static AberrationShader chromaticAberration;
+    public static DistortionShader distortion;
 
     public static void init(){
-        colorHallucination = new DrunkShader("colorHallucination");
-        chromaticAberration = new DrunkShader("chromaticAberration");
-        distortion = new DrunkShader("distortion");
+        colorHallucination = new HallucinationShader();
+        chromaticAberration = new AberrationShader();
+        distortion = new DistortionShader();
+    }
+
+    public static class HallucinationShader extends DrunkShader{
+        public HallucinationShader(){
+            super("colorHallucination");
+        }
+
+        @Override
+        public void applyOther(){
+            setUniformf("u_alpha", settings.getFloat("du-color-alpha"));
+        }
+
+        @Override
+        public float timeScale(){
+            return settings.getFloat("du-color-speed");
+        }
+    }
+
+    public static class AberrationShader extends DrunkShader{
+        public AberrationShader(){
+            super("chromaticAberration");
+        }
+
+        @Override
+        public void applyOther(){
+            setUniformf("u_scl", settings.getFloat("du-aberration-amount"));
+        }
+
+        @Override
+        public float timeScale(){
+            return settings.getFloat("du-aberration-speed");
+        }
+    }
+
+    public static class DistortionShader extends DrunkShader{
+        public DistortionShader(){
+            super("distortion");
+        }
+
+        @Override
+        public void applyOther(){
+            setUniformf("u_scl", settings.getFloat("du-distortion-amount"));
+        }
+
+        @Override
+        public float timeScale(){
+            return settings.getFloat("du-distortion-speed");
+        }
     }
 
     /** Copy of {@link SurfaceShader} that's able to get my shader. */
@@ -58,11 +106,19 @@ public class DrunkShaders{
             buffer.blit(this);
         }
 
+        public void applyOther(){
+        }
+
+        public float timeScale(){
+            return 1f;
+        }
+
         @Override
         public void apply(){
             setUniformf("u_campos", Core.camera.position.x - Core.camera.width / 2, Core.camera.position.y - Core.camera.height / 2);
             setUniformf("u_resolution", Core.camera.width, Core.camera.height);
-            setUniformf("u_time", Time.time);
+            setUniformf("u_time", Time.time * timeScale());
+            applyOther();
 
             if(hasUniform("u_noise")){
                 if(noiseTex == null){
