@@ -1,5 +1,5 @@
 #the mod name as displayed in-game
-displayName: "Drunkdustry"
+displayName: "Hallucinogen"
 
 #the internal name of your mod
 name: "how-is-a-robot-drunk-what"
@@ -10,8 +10,10 @@ author: "MEEPofFaith"
 #the fully qualified main class of the mod
 main: "drunkustry.Drunkdustry"
 
+subtitle: "aaaAAAAaaaaaAAAaaaaAAAAA"
+
 #the mod description as seen in the mod dialog
-description: "aaaAAAAaaaaaAAAaaaaAAAAA"
+description: "Oh god oh god oh god"
 
 #the mod version
 version: 1.0
