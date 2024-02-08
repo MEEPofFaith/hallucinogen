@@ -13,10 +13,12 @@ import static mindustry.Vars.*;
 
 public class DrunkShaders{
     public static DrunkShader colorHallucination;
+    public static DrunkShader chromaticAberration;
     public static DrunkShader distortion;
 
     public static void init(){
         colorHallucination = new DrunkShader("colorHallucination");
+        chromaticAberration = new DrunkShader("chromaticAberration");
         distortion = new DrunkShader("distortion");
     }
 

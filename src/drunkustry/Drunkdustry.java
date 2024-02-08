@@ -7,7 +7,6 @@ import drunkustry.graphics.*;
 import mindustry.game.EventType.*;
 import mindustry.mod.*;
 
-import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class Drunkdustry extends Mod{
@@ -22,8 +21,7 @@ public class Drunkdustry extends Mod{
     public void init(){
         DrunkSound.init();
         DrunkShaders.init();
-        DrunkColors.init();
-        DrunkWaves.init();
+        DrunkRendering.init();
     }
 
     private void loadSettings(){
