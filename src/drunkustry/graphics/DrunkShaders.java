@@ -22,7 +22,7 @@ public class DrunkShaders{
         distortion = new DistortionShader();
     }
 
-    public static class HallucinationShader extends DrunkShader{
+    public static class HallucinationShader extends DrunkScreenShader{
         public HallucinationShader(){
             super("colorHallucination");
         }
@@ -38,7 +38,7 @@ public class DrunkShaders{
         }
     }
 
-    public static class AberrationShader extends DrunkShader{
+    public static class AberrationShader extends DrunkScreenShader{
         public AberrationShader(){
             super("chromaticAberration");
         }
@@ -54,7 +54,7 @@ public class DrunkShaders{
         }
     }
 
-    public static class DistortionShader extends DrunkShader{
+    public static class DistortionShader extends DrunkScreenShader{
         public DistortionShader(){
             super("distortion");
         }
@@ -71,17 +71,11 @@ public class DrunkShaders{
     }
 
     /** Copy of {@link SurfaceShader} that's able to get my shader. */
-    public static class DrunkShader extends Shader{
-        Texture noiseTex;
-        FrameBuffer buffer = new FrameBuffer();
+    public static class DrunkScreenShader extends DrunkShader{
+        protected Texture noiseTex;
 
-        public DrunkShader(String frag){
-            super(getShaderFi("screenspace.vert"), getShaderFi(frag + ".frag"));
-            loadNoise();
-        }
-
-        public DrunkShader(String vertRaw, String fragRaw){
-            super(vertRaw, fragRaw);
+        public DrunkScreenShader(String frag){
+            super(frag);
             loadNoise();
         }
 
@@ -94,16 +88,6 @@ public class DrunkShaders{
                 t.setFilter(TextureFilter.linear);
                 t.setWrap(TextureWrap.repeat);
             };
-        }
-        
-        public void begin(){
-            buffer.resize(graphics.getWidth(), graphics.getHeight());
-            buffer.begin(Color.clear);
-        }
-        
-        public void end(){
-            buffer.end();
-            buffer.blit(this);
         }
 
         public void applyOther(){
@@ -129,6 +113,29 @@ public class DrunkShaders{
                 buffer.getTexture().bind(0);
                 setUniformi("u_noise", 1);
             }
+        }
+    }
+
+    public static class DrunkShader extends Shader{
+        protected FrameBuffer buffer = new FrameBuffer();
+
+        public DrunkShader(String frag){
+            super(getShaderFi("screenspace.vert"), getShaderFi(frag + ".frag"));
+        }
+
+        public void begin(){
+            buffer.resize(graphics.getWidth(), graphics.getHeight());
+            buffer.begin(Color.clear);
+        }
+
+        public void end(){
+            buffer.end();
+            buffer.blit(this);
+        }
+
+        @Override
+        public void apply(){
+            buffer.getTexture().bind(0);
         }
     }
 
