@@ -21,7 +21,7 @@ public class DrunkSound{
 
         Events.run(Trigger.update, () -> {
             Core.audio.globalPitch = 1.001f + Mathf.sin(
-                150 * settings.getFloat("du-drunk-scl", 1f) / Mathf.PI2,
+                150 / settings.getFloat("du-drunk-scl", 1f) / Mathf.PI2,
                 0.5f * settings.getFloat("du-drunk-mag", 1f)
             );
         });
