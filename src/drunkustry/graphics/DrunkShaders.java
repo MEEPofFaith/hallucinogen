@@ -62,6 +62,7 @@ public class DrunkShaders{
         @Override
         public void applyOther(){
             setUniformf("u_scl", settings.getFloat("du-distortion-amount"));
+            setUniformf("u_insanity", settings.getFloat("du-distortion-insanity"));
         }
 
         @Override

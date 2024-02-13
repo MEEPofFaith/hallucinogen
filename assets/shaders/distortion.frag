@@ -10,6 +10,7 @@ uniform vec2 u_campos;
 uniform vec2 u_resolution;
 uniform float u_time;
 uniform float u_scl;
+uniform float u_insanity;
 
 varying vec2 v_texCoords;
 
@@ -23,7 +24,7 @@ void main() {
             texture2D(u_noise, (coords) / NSCALE + vec2(wTime * 1.3) * vec2(0.9, -0.7)).r,
         texture2D(u_noise, (coords) / NSCALE + vec2(wTime) * vec2(0.7, 0.3)).r +
             texture2D(u_noise, (coords) / NSCALE + vec2(wTime * 1.2) * vec2(-0.5, -0.4)).r
-    ) - 1.0) * 2.0 * 2.0 * PI;
+    ) - 1.0) * 2.0 * 2.0 * PI * u_insanity;
     float oNoise = (texture2D(u_noise, (coords) / NSCALE + vec2(wTime * 1.5) * vec2(-0.8, -0.7)).r +
         texture2D(u_noise, (coords) / NSCALE + vec2(wTime * 1.1) * vec2(1.3, 0.3)).r - 0.5) * 4.0;
 
