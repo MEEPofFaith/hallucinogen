@@ -6,6 +6,7 @@ import arc.graphics.*;
 import arc.graphics.Texture.*;
 import arc.graphics.gl.*;
 import arc.util.*;
+import drunkustry.graphics.DrunkShaders.InversionShader.*;
 import mindustry.graphics.Shaders.*;
 
 import static arc.Core.*;
@@ -15,11 +16,13 @@ public class DrunkShaders{
     public static HallucinationShader colorHallucination;
     public static AberrationShader chromaticAberration;
     public static DistortionShader distortion;
+    public static InversionShader inversion;
 
     public static void init(){
         colorHallucination = new HallucinationShader();
         chromaticAberration = new AberrationShader();
         distortion = new DistortionShader();
+        inversion = new InversionShader();
     }
 
     public static class HallucinationShader extends DrunkScreenShader{
@@ -71,6 +74,20 @@ public class DrunkShaders{
         }
     }
 
+    public static class InversionShader extends DrunkShader{
+        public float lerp = 0f;
+
+        public InversionShader(){
+            super("inversion");
+        }
+
+        @Override
+        public void apply(){
+            setUniformf("u_lerp", lerp);
+            super.apply();
+        }
+    }
+
     /** Copy of {@link SurfaceShader} that's able to get my shader. */
     public static class DrunkScreenShader extends DrunkShader{
         protected Texture noiseTex;
@@ -119,17 +136,21 @@ public class DrunkShaders{
 
     public static class DrunkShader extends Shader{
         protected FrameBuffer buffer = new FrameBuffer();
+        protected final String frag;
 
         public DrunkShader(String frag){
             super(getShaderFi("screenspace.vert"), getShaderFi(frag + ".frag"));
+            this.frag = frag;
         }
 
         public void begin(){
+            Log.info(frag + " begin");
             buffer.resize(graphics.getWidth(), graphics.getHeight());
             buffer.begin(Color.clear);
         }
 
         public void end(){
+            Log.info(frag + " end");
             buffer.end();
             buffer.blit(this);
         }
