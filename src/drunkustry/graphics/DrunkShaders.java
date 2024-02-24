@@ -6,7 +6,6 @@ import arc.graphics.*;
 import arc.graphics.Texture.*;
 import arc.graphics.gl.*;
 import arc.util.*;
-import drunkustry.graphics.DrunkShaders.InversionShader.*;
 import mindustry.graphics.Shaders.*;
 
 import static arc.Core.*;
