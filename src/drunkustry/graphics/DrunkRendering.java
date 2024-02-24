@@ -9,6 +9,7 @@ import mindustry.graphics.*;
 
 import static arc.Core.*;
 import static drunkustry.graphics.DrunkShaders.*;
+import static mindustry.Vars.*;
 
 public class DrunkRendering{
     public static final float begin = Layer.min;
@@ -56,11 +57,12 @@ public class DrunkRendering{
             Draw.draw(begin, () -> inversion.begin());
             Draw.draw(end, () -> {
                 float t = Time.time / 60f * Mathf.PI / 4f * settings.getFloat("du-inversion", 1f);
-                inversion.lerp = (Mathf.absin(t, 1f, 1f) + //TODO better lerp. Gets stuck in middle.
-                    Mathf.absin(t, 1.3f, 1f) +
-                    Mathf.absin(t, 1.7f, 1f) +
-                    Mathf.absin(t, 0.5f, 1f) +
-                    Mathf.absin(t, 0.8f, 1f)) / 5f;
+                float s = Mathf.sin(t, 1f, 1f) +
+                    Mathf.sin(t, 1.3f, 1f) +
+                    Mathf.sin(t, 1.7f, 1f) +
+                    Mathf.sin(t, 0.5f, 1f) +
+                    Mathf.sin(t, 0.8f, 1f);
+                if(!state.isPaused()) inversion.lerp = Mathf.clamp(inversion.lerp + s / 5f / 10f * Time.delta, 0f, 1f);
                 inversion.end();
             });
         });
