@@ -62,7 +62,8 @@ public class DrunkRendering{
                     Mathf.sin(t, 1.7f, 1f) +
                     Mathf.sin(t, 0.5f, 1f) +
                     Mathf.sin(t, 0.8f, 1f);
-                if(!state.isPaused()) inversion.lerp = Mathf.clamp(inversion.lerp + s / 5f / 10f * Time.delta, 0f, 1f);
+                s /= 5f;
+                if(!state.isPaused()) inversion.lerp = Mathf.clamp(inversion.lerp + s * Time.delta, 0f, 1f);
                 inversion.end();
             });
         });
