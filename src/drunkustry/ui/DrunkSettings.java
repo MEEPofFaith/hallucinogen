@@ -25,6 +25,7 @@ public class DrunkSettings{
             t.pref(new FloatSliderSetting("du-drunk-mag", 1f, 0.1f, 2f, 0.01f, percent));
             t.checkPref("du-flanger", true);
             t.pref(new Separator("@settings.graphics"));
+            t.checkPref("du-menu-background", true);
             t.checkPref("du-aberration", true);
             t.pref(new FloatSliderSetting("du-aberration-speed", 1f, 0f, 5f, 0.01f, mult));
             t.pref(new FloatSliderSetting("du-aberration-amount", 1f, 0f, 5f, 0.01f, percent));

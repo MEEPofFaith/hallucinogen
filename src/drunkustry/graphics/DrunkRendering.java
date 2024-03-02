@@ -23,7 +23,10 @@ public class DrunkRendering{
         initDistortion();
         initInversion();
 
-        Reflect.set(ui.menufrag, "renderer", new DrunkMenuRenderer());
+        if(settings.getBool("du-menu-background", true)){
+            Log.debug("Drunkifying menu renderer...");
+            Reflect.set(ui.menufrag, "renderer", new DrunkMenuRenderer());
+        }
     }
 
     private static void initAberration(){
