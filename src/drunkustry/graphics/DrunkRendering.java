@@ -4,8 +4,10 @@ import arc.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.util.*;
+import drunkustry.ui.*;
 import mindustry.game.EventType.*;
 import mindustry.graphics.*;
+import mindustry.type.*;
 
 import static arc.Core.*;
 import static drunkustry.graphics.DrunkShaders.*;
@@ -20,6 +22,10 @@ public class DrunkRendering{
         initColor();
         initDistortion();
         initInversion();
+
+        //The seed seems to always be the same at this point, so use the old renderer's flyer type.
+        UnitType flyerType = Reflect.get((MenuRenderer)Reflect.get(ui.menufrag, "renderer"), "flyerType");
+        Reflect.set(ui.menufrag, "renderer", new DrunkMenuRenderer(flyerType));
     }
 
     private static void initAberration(){
@@ -55,18 +61,7 @@ public class DrunkRendering{
 
         Events.run(Trigger.drawOver, () -> {
             Draw.draw(begin, () -> inversion.begin());
-            Draw.draw(end, () -> {
-                float freq = settings.getFloat("du-inversion-freq", 1f);
-                float t = Time.time / 60f * Mathf.PI / 4f * freq;
-                float s = Mathf.sin(t, 1f, 1f) +
-                    Mathf.sin(t, 1.3f, 1f) +
-                    Mathf.sin(t, 1.7f, 1f) +
-                    Mathf.sin(t, 0.5f, 1f) +
-                    Mathf.sin(t, 0.8f, 1f);
-                s /= 5f * freq * 0.5f;
-                if(!state.isPaused()) inversion.lerp = Mathf.clamp(inversion.lerp + s * Time.delta, 0f, 1f);
-                inversion.end();
-            });
+            Draw.draw(end, () -> inversion.end());
         });
     }
 }

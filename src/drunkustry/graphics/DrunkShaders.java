@@ -5,6 +5,7 @@ import arc.files.*;
 import arc.graphics.*;
 import arc.graphics.Texture.*;
 import arc.graphics.gl.*;
+import arc.math.*;
 import arc.util.*;
 import mindustry.graphics.Shaders.*;
 
@@ -82,6 +83,16 @@ public class DrunkShaders{
 
         @Override
         public void apply(){
+            float freq = settings.getFloat("du-inversion-freq", 1f);
+            float t = Time.time / 60f * Mathf.PI / 4f * freq;
+            float s = Mathf.sin(t, 1f, 1f) +
+                Mathf.sin(t, 1.3f, 1f) +
+                Mathf.sin(t, 1.7f, 1f) +
+                Mathf.sin(t, 0.5f, 1f) +
+                Mathf.sin(t, 0.8f, 1f);
+            s /= 5f * freq * 0.5f;
+            if(!state.isPaused()) inversion.lerp = Mathf.clamp(inversion.lerp + s * Time.delta, 0f, 1f);
+
             setUniformf("u_lerp", lerp);
             super.apply();
         }
