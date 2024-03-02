@@ -23,9 +23,7 @@ public class DrunkRendering{
         initDistortion();
         initInversion();
 
-        //The seed seems to always be the same at this point, so use the old renderer's flyer type.
-        UnitType flyerType = Reflect.get((MenuRenderer)Reflect.get(ui.menufrag, "renderer"), "flyerType");
-        Reflect.set(ui.menufrag, "renderer", new DrunkMenuRenderer(flyerType));
+        Reflect.set(ui.menufrag, "renderer", new DrunkMenuRenderer());
     }
 
     private static void initAberration(){

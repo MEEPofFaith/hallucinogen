@@ -146,21 +146,17 @@ public class DrunkShaders{
 
     public static class DrunkShader extends Shader{
         protected FrameBuffer buffer = new FrameBuffer();
-        protected final String frag;
 
         public DrunkShader(String frag){
             super(getShaderFi("screenspace.vert"), getShaderFi(frag + ".frag"));
-            this.frag = frag;
         }
 
         public void begin(){
-            Log.info(frag + " begin");
             buffer.resize(graphics.getWidth(), graphics.getHeight());
             buffer.begin(Color.clear);
         }
 
         public void end(){
-            Log.info(frag + " end");
             buffer.end();
             buffer.blit(this);
         }
