@@ -18,7 +18,6 @@ import static mindustry.Vars.*;
 public class DrunkRendering{
     private static final FrameBuffer pingPong1 = new FrameBuffer();
     private static final FrameBuffer pingPong2 = new FrameBuffer();
-    private static final FrameBuffer screenBuffer = new FrameBuffer();
 
     public static void init(){
         Events.run(Trigger.drawOver, () -> {
@@ -35,7 +34,6 @@ public class DrunkRendering{
     public static void drawBegin(){
         pingPong1.resize(graphics.getWidth(), graphics.getHeight());
         pingPong2.resize(graphics.getWidth(), graphics.getHeight());
-        screenBuffer.resize(graphics.getWidth(), graphics.getHeight());
 
         pingPong1.begin(Color.clear);
     }
@@ -45,7 +43,7 @@ public class DrunkRendering{
 
         if(settings.getBool("du-aberration", true)) from = pingPong(from, chromaticAberration);
         if(settings.getBool("du-distortion", true)) from = pingPong(from, distortion);
-        if(settings.getBool("du-color", true)) drawScreen(colorHallucination);
+        if(settings.getBool("du-color", true)) drawScreen(from, colorHallucination);
         if(settings.getBool("du-inversion", true)) from = pingPong(from, inversion);
 
         from.end();
@@ -66,7 +64,9 @@ public class DrunkRendering{
         return to;
     }
 
-    private static void drawScreen(DrunkShader shader){
+    private static void drawScreen(FrameBuffer active, DrunkShader shader){
+        FrameBuffer screenBuffer = active == pingPong1 ? pingPong2 : pingPong1;
+
         screenBuffer.begin();
         Draw.rect();
         screenBuffer.end();
