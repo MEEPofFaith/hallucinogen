@@ -1,7 +1,6 @@
 package drunkustry.ui;
 
 import arc.*;
-import arc.func.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.graphics.gl.*;
@@ -12,8 +11,6 @@ import drunkustry.graphics.*;
 import mindustry.content.*;
 import mindustry.graphics.*;
 
-import static arc.Core.*;
-import static drunkustry.graphics.DrunkShaders.*;
 import static mindustry.Vars.*;
 
 public class DrunkMenuRenderer extends MenuRenderer{
@@ -45,10 +42,9 @@ public class DrunkMenuRenderer extends MenuRenderer{
         renderAll();
 
         Camera camera = (Camera)getMenuRendererField("camera");
-        Mat mat = (Mat)getMenuRendererField("mat");
         Draw.proj(camera);
         DrunkRendering.drawEnd(camera);
-        Draw.proj(mat);
+        Draw.proj((Mat)getMenuRendererField("mat"));
     }
 
     public void renderAll(){

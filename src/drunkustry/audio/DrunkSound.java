@@ -6,7 +6,7 @@ import arc.audio.Filters.*;
 import arc.math.*;
 import mindustry.game.EventType.*;
 
-import static arc.Core.settings;
+import static arc.Core.*;
 
 public class DrunkSound{
     public static FlangerFilter filter;
