@@ -163,10 +163,6 @@ public class DrunkShaders{
         }
     }
 
-    public static Fi getInternalShaderFi(String file){
-        return files.internal("shaders/" + file);
-    }
-
     public static Fi getShaderFi(String file){
         return tree.get("shaders/" + file);
     }
