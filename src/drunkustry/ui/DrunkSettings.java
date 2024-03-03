@@ -31,7 +31,7 @@ public class DrunkSettings{
             t.pref(new FloatSliderSetting("du-aberration-amount", 1f, 0f, 5f, 0.01f, percent));
             t.checkPref("du-color", true);
             t.pref(new FloatSliderSetting("du-color-speed", 1f, 0f, 5f, 0.01f, mult));
-            t.pref(new FloatSliderSetting("du-color-alpha", 0.25f, 0f, 1f, 0.01f, percent));
+            t.pref(new FloatSliderSetting("du-color-alpha", 0.15f, 0f, 1f, 0.01f, percent));
             t.checkPref("du-distortion", true);
             t.pref(new FloatSliderSetting("du-distortion-speed", 1f, 0f, 5f, 0.01f, mult));
             t.pref(new FloatSliderSetting("du-distortion-amount", 1f, 0f, 5f, 0.01f, percent));

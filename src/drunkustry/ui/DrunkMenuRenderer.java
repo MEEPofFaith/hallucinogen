@@ -8,6 +8,7 @@ import arc.graphics.gl.*;
 import arc.math.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
+import drunkustry.graphics.*;
 import mindustry.content.*;
 import mindustry.graphics.*;
 
@@ -24,8 +25,6 @@ public class DrunkMenuRenderer extends MenuRenderer{
     private final float trailTicks = 8f;
     private long randSeed;
 
-    private final boolean abb, col, dis, inv;
-
     public DrunkMenuRenderer(){
         super();
 
@@ -37,28 +36,13 @@ public class DrunkMenuRenderer extends MenuRenderer{
             : drawRand.random(1f) >= 0.75f ? 150
             : 250;
         randSeed = drawRand.seed0;
-        abb = settings.getBool("du-aberration", true);
-        col = settings.getBool("du-color", true);
-        dis = settings.getBool("du-distortion", true);
-        inv = settings.getBool("du-inversion", true);
     }
 
     @Override
     public void render(){
-        if(inv) inversion.begin();
-        if(dis) distortion.begin();
-        if(abb) chromaticAberration.begin();
-
+        DrunkRendering.drawBegin();
         renderAll();
-
-        if(abb) chromaticAberration.end();
-        if(col){
-            colorHallucination.begin();
-            Draw.rect();
-            colorHallucination.end();
-        }
-        if(dis) distortion.end();
-        if(inv) inversion.end();
+        DrunkRendering.drawEnd();
     }
 
     public void renderAll(){

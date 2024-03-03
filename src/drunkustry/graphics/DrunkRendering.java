@@ -1,7 +1,9 @@
 package drunkustry.graphics;
 
 import arc.*;
+import arc.graphics.*;
 import arc.graphics.g2d.*;
+import arc.graphics.gl.*;
 import arc.math.*;
 import arc.util.*;
 import drunkustry.ui.*;
@@ -14,14 +16,15 @@ import static drunkustry.graphics.DrunkShaders.*;
 import static mindustry.Vars.*;
 
 public class DrunkRendering{
-    public static final float begin = Layer.min;
-    public static final float end = Layer.max;
+    private static final FrameBuffer pingPong1 = new FrameBuffer();
+    private static final FrameBuffer pingPong2 = new FrameBuffer();
+    private static final FrameBuffer screenBuffer = new FrameBuffer();
 
     public static void init(){
-        initAberration();
-        initColor();
-        initDistortion();
-        initInversion();
+        Events.run(Trigger.drawOver, () -> {
+            Draw.draw(Layer.min, DrunkRendering::drawBegin);
+            Draw.draw(Layer.max, DrunkRendering::drawEnd);
+        });
 
         if(settings.getBool("du-menu-background", true)){
             Log.debug("Drunkifying menu renderer...");
@@ -29,40 +32,40 @@ public class DrunkRendering{
         }
     }
 
-    private static void initAberration(){
-        if(!settings.getBool("du-aberration", true)) return;
+    public static void drawBegin(){
+        pingPong1.resize(graphics.getWidth(), graphics.getHeight());
+        pingPong2.resize(graphics.getWidth(), graphics.getHeight());
+        screenBuffer.resize(graphics.getWidth(), graphics.getHeight());
 
-        Events.run(Trigger.drawOver, () -> {
-            Draw.draw(begin + 0.02f, () -> chromaticAberration.begin());
-            Draw.draw(end, () -> chromaticAberration.end());
-        });
+        pingPong1.begin(Color.clear);
     }
 
-    private static void initColor(){
-        if(!settings.getBool("du-color", true)) return;
+    public static void drawEnd(){
+        FrameBuffer from = pingPong1;
 
-        Events.run(Trigger.drawOver, () -> Draw.draw(end, () -> {
-            colorHallucination.begin();
-            Draw.rect();
-            colorHallucination.end();
-        }));
+        if(settings.getBool("du-aberration", true)) from = pingPong(from, chromaticAberration);
+        if(settings.getBool("du-distortion", true)) from = pingPong(from, distortion);
+        if(settings.getBool("du-color", true)) drawScreen(colorHallucination);
+        if(settings.getBool("du-inversion", true)) from = pingPong(from, inversion);
+
+        from.end();
+        from.blit(none);
     }
 
-    private static void initDistortion(){
-        if(!settings.getBool("du-distortion", true)) return;
+    private static FrameBuffer pingPong(FrameBuffer from, DrunkShader shader){
+        FrameBuffer to = from == pingPong1 ? pingPong2 : pingPong1;
 
-        Events.run(Trigger.drawOver, () -> {
-            Draw.draw(begin + 0.01f, () -> distortion.begin());
-            Draw.draw(end, () -> distortion.end());
-        });
+        from.end();
+        to.begin();
+        shader.blit(from);
+
+        return to;
     }
 
-    private static void initInversion(){
-        if(!settings.getBool("du-inversion", true)) return;
-
-        Events.run(Trigger.drawOver, () -> {
-            Draw.draw(begin, () -> inversion.begin());
-            Draw.draw(end, () -> inversion.end());
-        });
+    private static void drawScreen(DrunkShader shader){
+        screenBuffer.begin();
+        Draw.rect();
+        screenBuffer.end();
+        shader.blit(screenBuffer);
     }
 }

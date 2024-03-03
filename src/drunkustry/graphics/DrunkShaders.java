@@ -4,6 +4,7 @@ import arc.*;
 import arc.files.*;
 import arc.graphics.*;
 import arc.graphics.Texture.*;
+import arc.graphics.g2d.*;
 import arc.graphics.gl.*;
 import arc.math.*;
 import arc.util.*;
@@ -13,12 +14,14 @@ import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class DrunkShaders{
+    public static NoneShader none;
     public static HallucinationShader colorHallucination;
     public static AberrationShader chromaticAberration;
     public static DistortionShader distortion;
     public static InversionShader inversion;
 
     public static void init(){
+        none = new NoneShader();
         colorHallucination = new HallucinationShader();
         chromaticAberration = new AberrationShader();
         distortion = new DistortionShader();
@@ -138,32 +141,33 @@ public class DrunkShaders{
                 }
 
                 noiseTex.bind(1);
-                buffer.getTexture().bind(0);
+                texture.bind(0);
                 setUniformi("u_noise", 1);
             }
         }
     }
 
     public static class DrunkShader extends Shader{
-        protected FrameBuffer buffer = new FrameBuffer();
+        protected Texture texture;
 
         public DrunkShader(String frag){
             super(getShaderFi("screenspace.vert"), getShaderFi(frag + ".frag"));
         }
 
-        public void begin(){
-            buffer.resize(graphics.getWidth(), graphics.getHeight());
-            buffer.begin(Color.clear);
-        }
-
-        public void end(){
-            buffer.end();
+        public void blit(FrameBuffer buffer){
+            texture = buffer.getTexture();
             buffer.blit(this);
         }
 
         @Override
         public void apply(){
-            buffer.getTexture().bind(0);
+            texture.bind(0);
+        }
+    }
+
+    public static class NoneShader extends Shader{
+        public NoneShader(){
+            super(getShaderFi("screenspace.vert"), getShaderFi("none.frag"));
         }
     }
 
