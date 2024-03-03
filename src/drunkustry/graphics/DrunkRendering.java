@@ -40,7 +40,7 @@ public class DrunkRendering{
         pingPong1.begin(Color.clear);
     }
 
-    public static void drawEnd(){
+    public static void drawEnd(Camera camera){
         FrameBuffer from = pingPong1;
 
         if(settings.getBool("du-aberration", true)) from = pingPong(from, chromaticAberration);
@@ -49,7 +49,11 @@ public class DrunkRendering{
         if(settings.getBool("du-inversion", true)) from = pingPong(from, inversion);
 
         from.end();
-        from.blit(none);
+        Draw.rect(Draw.wrap(from.getTexture()), camera.position.x, camera.position.y, camera.width, -camera.height);
+    }
+
+    public static void drawEnd(){
+        drawEnd(camera);
     }
 
     private static FrameBuffer pingPong(FrameBuffer from, DrunkShader shader){

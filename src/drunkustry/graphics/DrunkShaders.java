@@ -14,14 +14,12 @@ import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class DrunkShaders{
-    public static NoneShader none;
     public static HallucinationShader colorHallucination;
     public static AberrationShader chromaticAberration;
     public static DistortionShader distortion;
     public static InversionShader inversion;
 
     public static void init(){
-        none = new NoneShader();
         colorHallucination = new HallucinationShader();
         chromaticAberration = new AberrationShader();
         distortion = new DistortionShader();
@@ -162,12 +160,6 @@ public class DrunkShaders{
         @Override
         public void apply(){
             texture.bind(0);
-        }
-    }
-
-    public static class NoneShader extends Shader{
-        public NoneShader(){
-            super(getShaderFi("screenspace.vert"), getShaderFi("none.frag"));
         }
     }
 
