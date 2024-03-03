@@ -38,13 +38,8 @@ public class DrunkMenuRenderer extends MenuRenderer{
     @Override
     public void render(){
         DrunkRendering.drawBegin();
-
         renderAll();
-
-        Camera camera = (Camera)getMenuRendererField("camera");
-        Draw.proj(camera);
-        DrunkRendering.drawEnd(camera);
-        Draw.proj((Mat)getMenuRendererField("mat"));
+        DrunkRendering.drawEnd();
     }
 
     public void renderAll(){

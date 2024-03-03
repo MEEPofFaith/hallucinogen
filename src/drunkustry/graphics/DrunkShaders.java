@@ -13,12 +13,14 @@ import static arc.Core.*;
 import static mindustry.Vars.*;
 
 public class DrunkShaders{
+    public static PassthroughShader passThrough;
     public static HallucinationShader colorHallucination;
     public static AberrationShader chromaticAberration;
     public static DistortionShader distortion;
     public static InversionShader inversion;
 
     public static void init(){
+        passThrough = new PassthroughShader();
         colorHallucination = new HallucinationShader();
         chromaticAberration = new AberrationShader();
         distortion = new DistortionShader();
@@ -159,6 +161,12 @@ public class DrunkShaders{
         @Override
         public void apply(){
             texture.bind(0);
+        }
+    }
+
+    public static class PassthroughShader extends Shader{
+        public PassthroughShader(){
+            super(getShaderFi("screenspace.vert"), getShaderFi("passThrough.frag"));
         }
     }
 
