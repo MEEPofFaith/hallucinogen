@@ -129,8 +129,8 @@ public class DrunkShaders{
 
         @Override
         public void apply(){
-            setUniformf("u_campos", Core.camera.position.x - Core.camera.width / 2, Core.camera.position.y - Core.camera.height / 2);
-            setUniformf("u_resolution", Core.camera.width, Core.camera.height);
+            setUniformf("u_campos", x, y);
+            setUniformf("u_resolution", w, h);
             setUniformf("u_time", Time.time * timeScale());
             applyOther();
 
@@ -148,14 +148,20 @@ public class DrunkShaders{
 
     public static class DrunkShader extends Shader{
         protected Texture texture;
+        protected float x, y, w, h;
 
         public DrunkShader(String frag){
             super(getShaderFi("screenspace.vert"), getShaderFi(frag + ".frag"));
         }
 
-        public void blit(FrameBuffer buffer){
+        public void blit(FrameBuffer buffer, Camera camera){
             texture = buffer.getTexture();
             buffer.blit(this);
+
+            w = camera.width;
+            h = camera.height;
+            x = camera.position.x - w / 2;
+            y = camera.position.y - h / 2f;
         }
 
         @Override

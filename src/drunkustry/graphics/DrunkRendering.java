@@ -36,34 +36,38 @@ public class DrunkRendering{
         pingPong1.begin(Color.clear);
     }
 
-    public static void drawEnd(){
+    public static void drawEnd(Camera camera){
         FrameBuffer from = pingPong1;
 
-        if(settings.getBool("du-aberration")) from = pingPong(from, chromaticAberration);
-        if(settings.getBool("du-distortion")) from = pingPong(from, distortion);
-        if(settings.getBool("du-color")) drawScreen(from, colorHallucination);
-        if(settings.getBool("du-inversion")) from = pingPong(from, inversion);
+        if(settings.getBool("du-aberration")) from = pingPong(from, chromaticAberration, camera);
+        if(settings.getBool("du-distortion")) from = pingPong(from, distortion, camera);
+        if(settings.getBool("du-color")) drawScreen(from, colorHallucination, camera);
+        if(settings.getBool("du-inversion")) from = pingPong(from, inversion, camera);
 
         from.end();
         from.blit(passThrough);
     }
 
-    private static FrameBuffer pingPong(FrameBuffer from, DrunkShader shader){
+    public static void drawEnd(){
+        drawEnd(camera);
+    }
+
+    private static FrameBuffer pingPong(FrameBuffer from, DrunkShader shader, Camera camera){
         FrameBuffer to = from == pingPong1 ? pingPong2 : pingPong1;
 
         from.end();
         to.begin();
-        shader.blit(from);
+        shader.blit(from, camera);
 
         return to;
     }
 
-    private static void drawScreen(FrameBuffer active, DrunkShader shader){
+    private static void drawScreen(FrameBuffer active, DrunkShader shader, Camera camera){
         FrameBuffer screenBuffer = active == pingPong1 ? pingPong2 : pingPong1;
 
         screenBuffer.begin();
         Draw.rect();
         screenBuffer.end();
-        shader.blit(screenBuffer);
+        shader.blit(screenBuffer, camera);
     }
 }

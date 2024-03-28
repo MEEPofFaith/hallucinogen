@@ -37,12 +37,6 @@ public class DrunkMenuRenderer extends MenuRenderer{
 
     @Override
     public void render(){
-        DrunkRendering.drawBegin();
-        renderAll();
-        DrunkRendering.drawEnd();
-    }
-
-    public void renderAll(){
         Reflect.set(MenuRenderer.class, this, "time", (float)getMenuRendererField("time") + Time.delta);
         Camera camera = (Camera)getMenuRendererField("camera");
         Mat mat = (Mat)getMenuRendererField("mat");
@@ -59,6 +53,7 @@ public class DrunkMenuRenderer extends MenuRenderer{
         mat.set(Draw.proj());
         Draw.flush();
         Draw.proj(camera);
+        DrunkRendering.drawBegin();
         batch.setProjection(camera.mat);
         batch.beginDraw();
         batch.drawCache(cacheFloor);
@@ -73,6 +68,7 @@ public class DrunkMenuRenderer extends MenuRenderer{
         batch.endDraw();
 
         drawRouters();
+        DrunkRendering.drawEnd(camera);
 
         Draw.proj(mat);
         Draw.color(0f, 0f, 0f, darkness);
