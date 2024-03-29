@@ -79,9 +79,9 @@ public class DrunkMenuRenderer extends MenuRenderer{
     protected void drawRouters(){
         Draw.color(routerGray);
 
-        routers((x, y, dir, speed, rot) -> {
-            float sX = Angles.trnsx(dir + 90f, 3f),
-                sY = Angles.trnsy(dir + 90f, 3f),
+        routers((x, y, dir, speed, rot, scl) -> {
+            float sX = Angles.trnsx(dir + 90f, 3f * scl),
+                sY = Angles.trnsy(dir + 90f, 3f * scl),
                 pX = Angles.trnsx(dir + 180f, speed * trailTicks),
                 pY = Angles.trnsy(dir + 180f, speed * trailTicks);
 
@@ -95,7 +95,8 @@ public class DrunkMenuRenderer extends MenuRenderer{
         Draw.color();
 
         TextureRegion icon = Blocks.router.fullIcon;
-        routers((x, y, dir, speed, rot) -> Draw.rect(icon, x, y, rot));
+        float s = icon.width;
+        routers((x, y, dir, speed, rot, scl) -> Draw.rect(icon, x, y, s * scl / 4f, s * scl / 4f, rot));
     }
 
     protected void routers(RouterDraw cons){
@@ -122,7 +123,8 @@ public class DrunkMenuRenderer extends MenuRenderer{
                 Mathf.mod(drawRand.random(range) + Tmp.v1.y, th + hOff) - hOff / 2f,
                 dir,
                 speed,
-                time * drawRand.random(minSpinSpeed, maxSpinSpeed) * Mathf.sign(drawRand.range(1f))
+                time * drawRand.random(minSpinSpeed, maxSpinSpeed) * Mathf.sign(drawRand.range(1f)),
+                drawRand.random(0.5f, 2f)
             );
         }
     }
@@ -131,7 +133,7 @@ public class DrunkMenuRenderer extends MenuRenderer{
         return Reflect.get(MenuRenderer.class, this, field);
     }
 
-    static interface RouterDraw{
-        void draw(float x, float y, float dir, float speed, float rot);
+    interface RouterDraw{
+        void draw(float x, float y, float dir, float speed, float rot, float scl);
     }
 }
