@@ -14,7 +14,6 @@ import mindustry.graphics.*;
 import static mindustry.Vars.*;
 
 public class DrunkMenuRenderer extends MenuRenderer{
-    private static final float darkness = 0.3f;
     private static final Color routerGray = Color.valueOf("6e7080");
     private final int width = !mobile ? 100 : 60, height = !mobile ? 50 : 40;
     private final Rand drawRand = new Rand();
@@ -71,9 +70,6 @@ public class DrunkMenuRenderer extends MenuRenderer{
         DrunkRendering.drawEnd(camera);
 
         Draw.proj(mat);
-        Draw.color(0f, 0f, 0f, darkness);
-        Fill.crect(0, 0, Core.graphics.getWidth(), Core.graphics.getHeight());
-        Draw.color();
     }
 
     protected void drawRouters(){
