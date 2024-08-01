@@ -5,6 +5,7 @@ import arc.scene.event.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.util.*;
+import drunkustry.graphics.DrunkShaders.AberrationShader.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 import mindustry.ui.dialogs.SettingsMenuDialog.*;
@@ -29,6 +30,9 @@ public class DrunkSettings{
             t.checkPref("du-aberration", true);
             t.pref(new FloatSliderSetting("du-aberration-speed", 1f, 0f, 5f, 0.01f, mult));
             t.pref(new FloatSliderSetting("du-aberration-amount", 1f, 0f, 5f, 0.01f, percent));
+            t.checkPref("du-aberration-rotation", false);
+            t.pref(new FloatSliderSetting("du-aberration-rotation-speed", 1f, 0.1f, 10f, 0.01f, percent));
+            t.sliderPref("du-aberration-mode", 0, 0, AberrationType.all.length - 1, s -> AberrationType.all[s].name());
             t.checkPref("du-color", true);
             t.pref(new FloatSliderSetting("du-color-speed", 1f, 0f, 5f, 0.01f, mult));
             t.pref(new FloatSliderSetting("du-color-alpha", 0.15f, 0f, 1f, 0.01f, percent));

@@ -7,6 +7,7 @@ import arc.graphics.Texture.*;
 import arc.graphics.gl.*;
 import arc.math.*;
 import arc.util.*;
+import drunkustry.graphics.DrunkShaders.AberrationShader.*;
 import mindustry.graphics.Shaders.*;
 
 import static arc.Core.*;
@@ -44,6 +45,8 @@ public class DrunkShaders{
     }
 
     public static class AberrationShader extends DrunkScreenShader{
+        private float aberDir = 0f;
+
         public AberrationShader(){
             super("chromaticAberration");
         }
@@ -51,11 +54,33 @@ public class DrunkShaders{
         @Override
         public void applyOther(){
             setUniformf("u_scl", settings.getFloat("du-aberration-amount"));
+            setUniformi("u_mode", settings.getInt("du-aberration-mode"));
+
+            float dir = 0;
+            if(settings.getBool("du-aberration-rotation")){
+                float sTime = Time.time / 60f;
+                float amount = Mathf.sin(sTime * 1.7f)
+                    - Mathf.sin(sTime * 2.3f)
+                    + Mathf.sin(sTime * 0.2f)
+                    + Mathf.cos(sTime * 3f)
+                    + Mathf.sin(sTime * 1.2f);
+                amount *= settings.getFloat("du-aberration-rotation-speed") / 2f;
+                aberDir += amount * Time.delta;
+
+                dir = aberDir;
+            }
+            setUniformf("u_dir", dir * Mathf.degRad);
         }
 
         @Override
         public float timeScale(){
             return settings.getFloat("du-aberration-speed");
+        }
+
+        public enum AberrationType{
+            RGB, CMY, RYGCB;
+
+            public final static AberrationType[] all = values();
         }
     }
 
