@@ -40,7 +40,7 @@ public class DrunkSettings{
             t.pref(new FloatSliderSetting("du-distortion-speed", 1f, 0f, 5f, 0.01f, mult));
             t.pref(new FloatSliderSetting("du-distortion-amount", 1f, 0f, 5f, 0.01f, percent));
             t.pref(new FloatSliderSetting("du-distortion-insanity", 1f, 0f, 5f, 0.01f, percent));
-            t.checkPref("du-inversion", true);
+            t.checkPref("du-inversion", false);
             t.pref(new FloatSliderSetting("du-inversion-freq", 1f, 0f, 5f, 0.01f, mult));
         });
     }
