@@ -58,14 +58,16 @@ public class DrunkShaders{
 
             float dir = 0;
             if(settings.getBool("du-aberration-rotation")){
-                float sTime = Time.time / 60f;
-                float amount = Mathf.sin(sTime * 1.7f)
-                    - Mathf.sin(sTime * 2.3f)
-                    + Mathf.sin(sTime * 0.2f)
-                    + Mathf.cos(sTime * 3f)
-                    - Mathf.sin(sTime * 1.2f);
-                amount *= settings.getFloat("du-aberration-rotation-speed") / 2f;
-                aberDir += amount * Time.delta;
+                if(!state.isPaused()){
+                    float sTime = Time.time / 60f;
+                    float amount = Mathf.sin(sTime * 1.7f)
+                        - Mathf.sin(sTime * 2.3f)
+                        + Mathf.sin(sTime * 0.2f)
+                        + Mathf.cos(sTime * 3f)
+                        - Mathf.sin(sTime * 1.2f);
+                    amount *= settings.getFloat("du-aberration-rotation-speed") / 2f;
+                    aberDir += amount * Time.delta;
+                }
 
                 dir = aberDir;
             }
