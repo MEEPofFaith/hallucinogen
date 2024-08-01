@@ -63,7 +63,7 @@ public class DrunkShaders{
                     - Mathf.sin(sTime * 2.3f)
                     + Mathf.sin(sTime * 0.2f)
                     + Mathf.cos(sTime * 3f)
-                    + Mathf.sin(sTime * 1.2f);
+                    - Mathf.sin(sTime * 1.2f);
                 amount *= settings.getFloat("du-aberration-rotation-speed") / 2f;
                 aberDir += amount * Time.delta;
 
