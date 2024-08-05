@@ -137,7 +137,7 @@ public class DrunkShaders{
         @Override
         public void apply(){
             float speed = settings.getFloat("du-blur-speed");
-            float t = Time.time / 60f * Mathf.PI / 4f * speed;
+            float t = Time.time / 60f * Mathf.PI / 8f * speed;
             float s = Mathf.sin(t, 1.2f, 1f) +
                 Mathf.sin(t, 1.5f, 1f) +
                 -Mathf.sin(t, 0.2f, 1f) +
