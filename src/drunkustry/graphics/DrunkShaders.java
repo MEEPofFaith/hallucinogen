@@ -58,10 +58,9 @@ public class DrunkShaders{
             setUniformf("u_scl", settings.getFloat("du-aberration-amount"));
             setUniformi("u_mode", settings.getInt("du-aberration-mode"));
 
-            float dir = 0;
+            float sTime = Time.time / 60f;
             if(settings.getBool("du-aberration-rotation")){
                 if(!state.isPaused()){
-                    float sTime = Time.time / 60f;
                     float amount = Mathf.sin(sTime * 1.7f)
                         - Mathf.sin(sTime * 2.3f)
                         + Mathf.sin(sTime * 0.2f)
@@ -71,9 +70,18 @@ public class DrunkShaders{
                     aberDir += amount * Time.delta;
                 }
 
-                dir = aberDir;
+                setUniformf("u_dir", aberDir * Mathf.degRad);
+            }else{
+                setUniformf("u_dir", 0f);
             }
-            setUniformf("u_dir", dir * Mathf.degRad);
+
+            float amount = Mathf.sin(sTime * 2.1f);
+                amount += Mathf.sin(sTime * 3.5f);
+                amount += Mathf.cos(sTime * 4.67f);
+                amount += Mathf.sin(sTime * 1.2f);
+                amount *= 2f;
+
+            setUniformf("u_offset", amount);
         }
 
         @Override

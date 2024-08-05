@@ -40,8 +40,8 @@ public class DrunkRendering{
         FrameBuffer from = pingPong1;
 
         if(settings.getBool("du-aberration")) from = pingPong(from, chromaticAberration, camera);
-        if(settings.getBool("du-blur")) from = pingPong(from, blur, camera);
         if(settings.getBool("du-distortion")) from = pingPong(from, distortion, camera);
+        if(settings.getBool("du-blur")) from = pingPong(from, blur, camera);
         if(settings.getBool("du-color")) drawScreen(from, colorHallucination, camera);
         if(settings.getBool("du-inversion")) from = pingPong(from, inversion, camera);
 

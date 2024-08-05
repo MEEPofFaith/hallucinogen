@@ -7,6 +7,7 @@ uniform vec2 u_resolution;
 uniform float u_time;
 uniform float u_scl;
 uniform float u_dir;
+uniform float u_offset;
 uniform int u_mode;
 
 varying vec2 v_texCoords;
@@ -40,11 +41,11 @@ vec4 RGBtoCMYK(vec3 rgb){
     return clamp(vec4(cmy, k), 0.0, 1.0);
 }
 
-vec2 getOffset(vec2 pos, float offset){
-    return pos + vec2(cos(u_dir) * offset, sin(u_dir) * offset);
+vec2 getOffset(vec2 pos, vec2 offset){
+    return pos + vec2(cos(u_dir) * offset.x, sin(u_dir) * offset.y);
 }
 
-vec3 getCol(vec2 cPos, float offset){
+vec3 getCol(vec2 cPos, vec2 offset){
     vec2 pos1 = getOffset(cPos, offset);
     vec2 pos2 = getOffset(cPos, -offset);
 
@@ -82,13 +83,7 @@ vec3 getCol(vec2 cPos, float offset){
 void main() {
     vec2 c = v_texCoords.xy;
 
-    float sTime = u_time / 60.0;
-    float amount = sin(sTime * 2.1);
-    amount += sin(sTime * 3.5);
-    amount += cos(sTime * 4.67);
-    amount += sin(sTime * 1.2);
-    amount *= 2.0 * u_scl;
-    amount /= u_resolution.x;
+    vec2 offset = vec2(u_offset) * u_scl / u_resolution;
 
-    gl_FragColor = vec4(getCol(c, amount), 1.0);
+    gl_FragColor = vec4(getCol(c, offset), 1.0);
 }
