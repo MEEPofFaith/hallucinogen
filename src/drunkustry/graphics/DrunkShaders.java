@@ -19,6 +19,7 @@ public class DrunkShaders{
     public static AberrationShader chromaticAberration;
     public static DistortionShader distortion;
     public static InversionShader inversion;
+    public static BlurShader blur;
 
     public static void init(){
         passThrough = new PassThroughShader();
@@ -26,6 +27,7 @@ public class DrunkShaders{
         chromaticAberration = new AberrationShader();
         distortion = new DistortionShader();
         inversion = new InversionShader();
+        blur = new BlurShader();
     }
 
     public static class HallucinationShader extends DrunkScreenShader{
@@ -123,6 +125,29 @@ public class DrunkShaders{
             if(!state.isPaused()) inversion.lerp = Mathf.clamp(inversion.lerp + s * Time.delta, 0f, 1f);
 
             setUniformf("u_lerp", lerp);
+            super.apply();
+        }
+    }
+
+    public static class BlurShader extends DrunkShader{
+        public BlurShader(){
+            super("blur");
+        }
+
+        @Override
+        public void apply(){
+            float speed = settings.getFloat("du-blur-speed");
+            float t = Time.time / 60f * Mathf.PI / 4f * speed;
+            float s = Mathf.sin(t, 1.2f, 1f) +
+                Mathf.sin(t, 1.5f, 1f) +
+                -Mathf.sin(t, 0.2f, 1f) +
+                Mathf.sin(t, 0.7f, 1f) +
+                -Mathf.cos(t, 2f, 1f);
+            s /= 5f;
+            s *= 4f * settings.getFloat("du-blur-mag");
+
+            setUniformf("u_resolution", w, h);
+            setUniformf("u_radius", Math.abs(s));
             super.apply();
         }
     }
