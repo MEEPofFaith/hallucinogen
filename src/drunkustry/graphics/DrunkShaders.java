@@ -216,12 +216,13 @@ public class DrunkShaders{
 
         public void blit(FrameBuffer buffer, Camera camera){
             texture = buffer.getTexture();
-            buffer.blit(this);
 
             w = camera.width;
             h = camera.height;
             x = camera.position.x - w / 2;
             y = camera.position.y - h / 2f;
+
+            buffer.blit(this);
         }
 
         @Override

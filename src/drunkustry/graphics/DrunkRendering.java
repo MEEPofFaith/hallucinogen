@@ -33,7 +33,7 @@ public class DrunkRendering{
         pingPong1.resize(graphics.getWidth(), graphics.getHeight());
         pingPong2.resize(graphics.getWidth(), graphics.getHeight());
 
-        pingPong1.begin(Color.clear);
+        pingPong1.begin();
     }
 
     public static void drawEnd(Camera camera){

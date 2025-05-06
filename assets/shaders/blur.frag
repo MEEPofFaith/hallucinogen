@@ -12,8 +12,8 @@ varying vec2 v_texCoords;
 void main() {
     vec2 c = v_texCoords.xy;
 
-    if(u_radius < 0.01f){
-        gl_FragColor = texture2D(u_texture, v_texCoords);
+    if(u_radius < STEP){
+        gl_FragColor = texture2D(u_texture, c);
         return;
     }
 
