@@ -13,7 +13,7 @@ void main() {
     vec2 c = v_texCoords.xy;
 
     if(u_radius < 0.01f){
-        gl_Fragcolor = texture2D(u_texture, v_texCoords);
+        gl_FragColor = texture2D(u_texture, v_texCoords);
         return;
     }
 
