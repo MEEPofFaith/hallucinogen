@@ -57,9 +57,9 @@ vec3 getCol(vec2 cPos, vec2 offset){
                 texture2D(u_texture, pos2).b
             );
         case 1: //cmyk
-            vec4 cmyk1 = RGBtoCMYK(texture2D(u_texture, pos1));
-            vec4 cmyk2 = RGBtoCMYK(texture2D(u_texture, cPos));
-            vec4 cmyk3 = RGBtoCMYK(texture2D(u_texture, pos2));
+            vec4 cmyk1 = RGBtoCMYK(texture2D(u_texture, pos1).rgb);
+            vec4 cmyk2 = RGBtoCMYK(texture2D(u_texture, cPos).rgb);
+            vec4 cmyk3 = RGBtoCMYK(texture2D(u_texture, pos2).rgb);
 
             vec4 cmykOut = vec4(cmyk1.x, cmyk2.y, cmyk3.z, cmyk2.w);
 
