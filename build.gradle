@@ -7,6 +7,7 @@ sourceSets.main.java.srcDirs = ["src"]
 repositories{
     mavenCentral()
     maven{ url "https://raw.githubusercontent.com/Zelaux/MindustryRepo/master/repository" }
+    maven { url = uri("https://maven.xpdustry.com/mindustry") }
     maven{ url 'https://www.jitpack.io' }
 }
 
@@ -16,9 +17,6 @@ java{
 }
 
 ext{
-    //the build number that this mod is made for
-    mindustryVersion = 'v146'
-    jabelVersion = "93fde537c7"
     //windows sucks
     isWindows = System.getProperty("os.name").toLowerCase().contains("windows")
     sdkRoot = System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT")
@@ -41,7 +39,7 @@ dependencies{
 //force arc version
 configurations.all{
     resolutionStrategy.eachDependency { details ->
-        if(details.requested.group == 'com.github.Anuken.Arc'){
+        if (details.requested.group == 'com.github.Anuken.Arc') {
             details.useVersion "$mindustryVersion"
         }
     }
@@ -75,7 +73,7 @@ jar{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
     }
 
-    from(rootDir){
+    from(projectDir){
         include "mod.hjson"
     }
 
