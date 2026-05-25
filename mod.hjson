@@ -19,7 +19,7 @@ description: "The best sensory overload you can get, at least legally."
 version: 9
 
 #the minimum game build required to run this mod
-minGameVersion: 147
+minGameVersion: 158.1
 
 #this is a java mod
 java: true
